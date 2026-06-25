@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>灵犀 AI 对话助手</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.1/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <style>
+    /* 模态框样式 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      color: #ccc;
+    }
+    .modal-remove-btn {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-remove-btn:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="container">
+    <!-- 欢迎区域：始终存在，通过 display 控制显示 -->
+    <div id="welcome-section" class="welcome-section">
+      <h1 class="welcome-title">嗨，我是灵犀</h1>
+      <p class="welcome-subtitle">我能帮你什么吗？</p>
+      <div class="suggest-cards">
+        <div class="card" data-query="我是一名前端开发初学者，如何提升相关技能？">
+          <div class="card-icon code-icon"></div>
+          <p>我是一名前端开发初学者，如何提升相关技能？</p>
+        </div>
+        <div class="card" data-query="有哪些平价又新颖的生日礼物适合送朋友。">
+          <div class="card-icon idea-icon"></div>
+          <p>有哪些平价又新颖的生日礼物适合送朋友。</p>
+        </div>
+        <div class="card" data-query="准备在家里办一个大型家庭聚会，帮我计划。">
+          <div class="card-icon plan-icon"></div>
+          <p>准备在家里办一个大型家庭聚会，帮我计划。</p>
+        </div>
+        <div class="card" data-query="带小朋友去野餐，有什么好玩的活动建议吗？">
+          <div class="card-icon tool-icon"></div>
+          <p>带小朋友去野餐，有什么好玩的活动建议吗？</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 对话区域：初始隐藏 -->
+    <div id="chat-container" class="chat-container"></div>
+
+    <!-- 输入区域固定在底部，由 CSS 处理 -->
+    <div class="input-area">
+      <div class="input-row">
+        <div class="input-container">
+          <textarea id="user-input" placeholder="有问题尽管问我" rows="1"></textarea>
+          <div class="inline-buttons">
+            <div id="upload-area" class="upload-area">
+              <button id="upload-btn" class="inline-btn" title="上传图片">📎</button>
+              <div id="image-preview-inline" class="image-preview-inline" style="display: none;">
+                <img id="preview-img" alt="预览">
+              </div>
+            </div>
+            <button id="send-btn" class="send-btn" style="display: none;">➤</button>
+            <button id="stop-btn" class="stop-btn">⏹️</button>
+          </div>
+        </div>
+        <div class="external-buttons">
+          <button id="theme-toggle" class="external-btn" title="切换主题">🌙</button>
+          <button id="clear-btn" class="external-btn" title="清空对话">🗑️</button>
+        </div>
+      </div>
+      <p class="disclaimer">内容由 AI 大模型生成，请仔细甄别</p>
+    </div>
+  </div>
+
+  <!-- 大图预览模态框 -->
+  <div id="image-modal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <button id="modal-remove-btn" class="modal-remove-btn">移除图片</button>
+  </div>
+
+  <script src="js/index.js"></script>
+</body>
+</html>
